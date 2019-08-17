@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.PovDeterminMapper">
+	
+	<update id="updateStuPoorDeterMin" parameterType="com.pdsu.stuManage.bean.Student2">
+		update student2 set fammly=#{fammly},fammlynum=#{fammlynum} where sid = #{sid}
+	</update>
+	
+	<insert id="addStuPoorDeterMin" parameterType="com.pdsu.stuManage.bean.Student2">
+		insert into student2(sid,fammly,fammlynum) values(#{sid},#{fammly},#{fammlynum})
+	</insert>
+	
+		<!-- 统计贫困认定分数 -->	 			
+  		<resultMap type="com.pdsu.stuManage.bean.Student1" id="studentMapper">
+  			<id column="sid" property="sid"/>
+  			<result column="sname" property="sname"/>  			
+  			<result column="snum" property="snum"/>  			
+  			<result column="exnum" property="exnum"/>  			  		  			
+  			<result column="cname" property="cname"/>  			  			 						
+  			<result column="sgrade" property="sgrade"/>  			
+  			<result column="ssex" property="ssex"/>  			
+  			<result column="smajor" property="smajor"/>  			
+  			<result column="sstatue" property="sstatue"/>   			
+  			<association property="student2" javaType="com.pdsu.stuManage.bean.Student2">  				  	  				
+	  			<result column="fammlynum" property="fammlynum"/>	  	
+  			</association>
+  		</resultMap>
+  		<select id="selectStuPageByFindStuPov" resultMap="studentMapper">
+  			select s.sid,s.sname,s.snum,s.exnum,s.cname,s.sgrade,s.ssex,s.smajor,s.sstatue,c.fammlynum,c.sid
+  			from student1 s,student2 c 			
+  			 <where>  				
+			<if test="stu_name != null and stu_name != ''">
+				sname like "%"#{stu_name}"%"
+			</if>
+			<if test="enter_year != null and enter_year != ''">
+				and sgrade  = #{enter_year}
+			</if>
+			<if test="stu_major != null and stu_major != ''">
+				and smajor  = #{stu_major}
+			</if>
+			<if test="stu_class != null and stu_class != ''">
+				and cname  = #{stu_class}
+			</if>	
+			and c.sid = s.sid		
+		</where>	 
+			 ORDER BY fammlynum DESC limit #{startRow},#{size} 
+  		</select>
+  		
+  		<!-- 添加民主评议分数 -->
+  		<update id="addPovDeterScore" parameterType="com.pdsu.stuManage.bean.Student2">
+  			update student2 set fammlynum = #{fammlynum} where sid = #{sid}
+  		</update>
+			
+		<select id="selectPovDeterScore" parameterType="String" resultType="com.pdsu.stuManage.bean.Student2">
+			select fammlynum from student2 where sid = #{id}
+		</select>
+		
+		<select id="selectPovDeterInfo" parameterType="String" resultType="com.pdsu.stuManage.bean.Student2">
+			select fammly from student2 where sid = #{sid}
+		</select>
+		
+		<update id="deletePovDeterInfo" parameterType="String">
+			update student2 set fammlynum = 0 where sid = #{sid}
+		</update>
+		
+		<!-- 在function表记录贫困认定的开放关闭的状态 -->
+		<update id="updatePovDeterStutas" parameterType="com.pdsu.stuManage.bean.Function">
+			update function set pression = #{pression} where fid = #{fid}
+		</update>
+		
+		<!-- 查询注册状态 -->
+		<select id="selectPovDeterStutas" parameterType="String" resultType="com.pdsu.stuManage.bean.Function">
+			select pression from function where fid = #{id}
+		</select>
+		
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.CandtMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Candt">
+    <id column="csid" jdbcType="CHAR" property="csid" />
+    <result column="tid" jdbcType="CHAR" property="tid" />
+    <result column="cid" jdbcType="CHAR" property="cid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    csid, tid, cid
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.CandtExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from candt
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from candt
+    where csid = #{csid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from candt
+    where csid = #{csid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.CandtExample">
+    delete from candt
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Candt">
+    insert into candt (csid, tid, cid)
+    values (#{csid,jdbcType=CHAR}, #{tid,jdbcType=CHAR}, #{cid,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Candt">
+    insert into candt
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="csid != null">
+        csid,
+      </if>
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="csid != null">
+        #{csid,jdbcType=CHAR},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=CHAR},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.CandtExample" resultType="java.lang.Long">
+    select count(*) from candt
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update candt
+    <set>
+      <if test="record.csid != null">
+        csid = #{record.csid,jdbcType=CHAR},
+      </if>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=CHAR},
+      </if>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update candt
+    set csid = #{record.csid,jdbcType=CHAR},
+      tid = #{record.tid,jdbcType=CHAR},
+      cid = #{record.cid,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.stuManage.bean.Candt">
+    update candt
+    <set>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=CHAR},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=CHAR},
+      </if>
+    </set>
+    where csid = #{csid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.stuManage.bean.Candt">
+    update candt
+    set tid = #{tid,jdbcType=CHAR},
+      cid = #{cid,jdbcType=CHAR}
+    where csid = #{csid,jdbcType=CHAR}
+  </update>
+</mapper>

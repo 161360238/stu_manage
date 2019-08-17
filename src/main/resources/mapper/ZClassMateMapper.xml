@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.ZClassmateMapper">
+	
+	<!-- 查看本班级的学生 -->
+	<select id="showClassmateByCid" parameterType="String" resultType="com.pdsu.stuManage.bean.Student1">
+			SELECT sname,simage,snum,exnum
+			FROM
+				student1
+			WHERE
+				cid IN (
+					SELECT cid
+					FROM
+						student1
+					WHERE
+						sid = #{sid}
+				)
+	</select>
+	
+	<!-- 查询学生基本信息 -->
+	<select id="selectZhifuBySid" resultType="com.pdsu.stuManage.bean.Student2">
+  			select party,role from student2 where sid = #{sid}
+  		</select>
+  		<resultMap type="com.pdsu.stuManage.bean.Student1" id="studentMapper">
+  			<id column="sid" property="sid"/>
+  			<result column="sname" property="sname"/>  			
+  			<result column="snum" property="snum"/>  			
+  			<result column="exnum" property="exnum"/>  			
+  			<result column="colname" property="colname"/>  			
+  			<result column="cname" property="cname"/>  			
+  			<result column="rid" property="rid"/>  			
+  			<result column="sphone" property="sphone"/>  			
+  			<result column="sgrade" property="sgrade"/>  			
+  			<result column="ssex" property="ssex"/>  			
+  			<result column="smajor" property="smajor"/>  			
+  			<result column="sstatue" property="sstatue"/>	 						
+  			<association property="student2"
+  				select="selectZhifuBySid" column="sid" javaType="com.pdsu.stuManage.bean.Student2">	  						
+	  				<result column="part" property="part"/>	
+	  				<result column="role" property="role"/>   					  					  				
+  			</association>			
+  		</resultMap>
+  		
+  		<!-- 个人信息 -->
+  		<select id="selectStuBaiscInfoBySid" resultMap="studentMapper" parameterType="String" >
+  			select sid,sname,cname,snum,exnum,colname,cid,rid,sphone,sgrade,ssex,smajor,sstatue from student1 where sid=#{sid}		  				
+  		</select>
+  		
+  		<!-- 奖励信息 -->
+	  	<select id="selectMyselfRewardInfo" resultType="com.pdsu.stuManage.bean.Reward" parameterType="String">
+	  		select rid,rdesc,rtime from reward where sid = #{sid}
+	  	</select>	
+	  	 
+	  	<select id="selectRewardDetailINfo" resultType="com.pdsu.stuManage.bean.Reward" parameterType="String">
+	  		select rdesc,rtime,rscore,rother from reward where rid = #{rid}
+	  	</select>
+
+</mapper>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.PunishmentMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Punishment">
+    <id column="pid" jdbcType="CHAR" property="pid" />
+    <result column="sid" jdbcType="CHAR" property="sid" />
+    <result column="pdesc" jdbcType="VARCHAR" property="pdesc" />
+    <result column="ptime" jdbcType="TIMESTAMP" property="ptime" />
+    <result column="pscore" jdbcType="VARCHAR" property="pscore" />
+    <result column="pother" jdbcType="VARCHAR" property="pother" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pid, sid, pdesc, ptime, pscore, pother
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.PunishmentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from punishment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from punishment
+    where pid = #{pid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from punishment
+    where pid = #{pid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.PunishmentExample">
+    delete from punishment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Punishment">
+    insert into punishment (pid, sid, pdesc, ptime, 
+      pscore, pother)
+    values (#{pid,jdbcType=CHAR}, #{sid,jdbcType=CHAR}, #{pdesc,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, 
+      #{pscore,jdbcType=VARCHAR}, #{pother,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Punishment">
+    insert into punishment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="pdesc != null">
+        pdesc,
+      </if>
+      <if test="ptime != null">
+        ptime,
+      </if>
+      <if test="pscore != null">
+        pscore,
+      </if>
+      <if test="pother != null">
+        pother,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=CHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=CHAR},
+      </if>
+      <if test="pdesc != null">
+        #{pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null">
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pscore != null">
+        #{pscore,jdbcType=VARCHAR},
+      </if>
+      <if test="pother != null">
+        #{pother,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.PunishmentExample" resultType="java.lang.Long">
+    select count(*) from punishment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update punishment
+    <set>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=CHAR},
+      </if>
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=CHAR},
+      </if>
+      <if test="record.pdesc != null">
+        pdesc = #{record.pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ptime != null">
+        ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pscore != null">
+        pscore = #{record.pscore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pother != null">
+        pother = #{record.pother,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update punishment
+    set pid = #{record.pid,jdbcType=CHAR},
+      sid = #{record.sid,jdbcType=CHAR},
+      pdesc = #{record.pdesc,jdbcType=VARCHAR},
+      ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      pscore = #{record.pscore,jdbcType=VARCHAR},
+      pother = #{record.pother,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.stuManage.bean.Punishment">
+    update punishment
+    <set>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=CHAR},
+      </if>
+      <if test="pdesc != null">
+        pdesc = #{pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null">
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pscore != null">
+        pscore = #{pscore,jdbcType=VARCHAR},
+      </if>
+      <if test="pother != null">
+        pother = #{pother,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.stuManage.bean.Punishment">
+    update punishment
+    set sid = #{sid,jdbcType=CHAR},
+      pdesc = #{pdesc,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pscore = #{pscore,jdbcType=VARCHAR},
+      pother = #{pother,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=CHAR}
+  </update>
+</mapper>

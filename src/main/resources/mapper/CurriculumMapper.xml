@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.CurriculumMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Curriculum">
+    <id column="cuid" jdbcType="CHAR" property="cuid" />
+    <result column="cunature" jdbcType="INTEGER" property="cunature" />
+    <result column="cuname" jdbcType="VARCHAR" property="cuname" />
+    <result column="cuscore" jdbcType="INTEGER" property="cuscore" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cuid, cunature, cuname, cuscore
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.CurriculumExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from curriculum
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from curriculum
+    where cuid = #{cuid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from curriculum
+    where cuid = #{cuid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.CurriculumExample">
+    delete from curriculum
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Curriculum">
+    insert into curriculum (cuid, cunature, cuname, 
+      cuscore)
+    values (#{cuid,jdbcType=CHAR}, #{cunature,jdbcType=INTEGER}, #{cuname,jdbcType=VARCHAR}, 
+      #{cuscore,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Curriculum">
+    insert into curriculum
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cuid != null">
+        cuid,
+      </if>
+      <if test="cunature != null">
+        cunature,
+      </if>
+      <if test="cuname != null">
+        cuname,
+      </if>
+      <if test="cuscore != null">
+        cuscore,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cuid != null">
+        #{cuid,jdbcType=CHAR},
+      </if>
+      <if test="cunature != null">
+        #{cunature,jdbcType=INTEGER},
+      </if>
+      <if test="cuname != null">
+        #{cuname,jdbcType=VARCHAR},
+      </if>
+      <if test="cuscore != null">
+        #{cuscore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.CurriculumExample" resultType="java.lang.Long">
+    select count(*) from curriculum
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update curriculum
+    <set>
+      <if test="record.cuid != null">
+        cuid = #{record.cuid,jdbcType=CHAR},
+      </if>
+      <if test="record.cunature != null">
+        cunature = #{record.cunature,jdbcType=INTEGER},
+      </if>
+      <if test="record.cuname != null">
+        cuname = #{record.cuname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cuscore != null">
+        cuscore = #{record.cuscore,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update curriculum
+    set cuid = #{record.cuid,jdbcType=CHAR},
+      cunature = #{record.cunature,jdbcType=INTEGER},
+      cuname = #{record.cuname,jdbcType=VARCHAR},
+      cuscore = #{record.cuscore,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.stuManage.bean.Curriculum">
+    update curriculum
+    <set>
+      <if test="cunature != null">
+        cunature = #{cunature,jdbcType=INTEGER},
+      </if>
+      <if test="cuname != null">
+        cuname = #{cuname,jdbcType=VARCHAR},
+      </if>
+      <if test="cuscore != null">
+        cuscore = #{cuscore,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cuid = #{cuid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.stuManage.bean.Curriculum">
+    update curriculum
+    set cunature = #{cunature,jdbcType=INTEGER},
+      cuname = #{cuname,jdbcType=VARCHAR},
+      cuscore = #{cuscore,jdbcType=INTEGER}
+    where cuid = #{cuid,jdbcType=CHAR}
+  </update>
+</mapper>

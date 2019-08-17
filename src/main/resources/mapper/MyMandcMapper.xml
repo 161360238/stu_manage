@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.MyMandcMapper">
+ 	
+<!-- addAndGetYear 插入年份 -->
+		<insert id="addAndGetYear" parameterType="com.pdsu.stuManage.bean.Mandc">
+		  insert into mandc(cgrade,cmajor,pid) values(#{cgrade},#{cmajor}, #{pid})
+		  <selectKey resultType="int" keyProperty="reid">
+		  		select @@identity
+		  </selectKey>
+		</insert>
+
+<!--  addAndGetGrate 插入专业 -->
+		<insert id="addAndGetMajor" parameterType="com.pdsu.stuManage.bean.Mandc">
+		  insert into mandc(cmajor,pid) values(#{cmajor}, #{pid})
+		  <selectKey resultType="int" keyProperty="reid">
+		  		select @@identity
+		  </selectKey>
+		</insert> 
+		
+<!-- addAndGetClass 插入班级 -->
+		<insert id="addAndGetClass" parameterType="com.pdsu.stuManage.bean.Mandc">
+		
+				  insert into mandc(cmajor,cname,pid,cid) values(#{cmajor},#{cname}, #{pid},#{cid})
+				  <selectKey resultType="int" keyProperty="reid">
+				  		select @@identity
+				  </selectKey>
+		</insert>
+
+<!-- selectByYear，根据年份查记录 -->
+		<select id="selectByYear" parameterType="java.lang.Integer" resultType="com.pdsu.stuManage.bean.Mandc">
+			select reid from mandc where cgrade =#{year}
+		</select>
+
+<!-- selectByYearAndMajor 根据专业和他的父id查询 -->
+		<select id="selectByYearAndMajor" resultType="com.pdsu.stuManage.bean.Mandc">
+			select reid from mandc where cmajor=#{cmajor} and pid=#{pid}
+		</select>
+
+<!-- selectByclassAndMajor 根据班级和他的父id查询 -->
+		<select id="selectByclassAndMajor" resultType="com.pdsu.stuManage.bean.Mandc">
+				select reid from mandc where cname=#{cname} and pid=#{pid}
+		</select>
+<!-- selectYear 查询年份 -->
+		<select id="selectYear" parameterType="java.lang.Integer" resultType="com.pdsu.stuManage.bean.Mandc">
+				select cgrade from mandc where pid=#{i}
+		</select>
+		
+<!-- selectReidByCgrade 根据年份查询该记录的主键， -->
+		<select id="selectReidByCgrade" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+				select reid from mandc where cgrade=#{cgrade}
+		</select>
+
+<!-- selectMajor 根据年份查询专业 -->
+		<select id="selectMajor" parameterType="java.lang.Integer" resultType="com.pdsu.stuManage.bean.Mandc">
+				select * from mandc where pid=#{pid}
+		</select>
+
+		
+<!-- selectclazz 根据专业的主键作为pid 查询班级 -->
+		<select id="selectclazz" parameterType="java.lang.Integer" resultType="com.pdsu.stuManage.bean.Mandc">
+				select * from mandc where pid=#{pid}
+		</select>
+
+		
+</mapper>

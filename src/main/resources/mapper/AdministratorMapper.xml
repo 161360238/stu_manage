@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.AdministratorMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Administrator">
+    <id column="aid" jdbcType="CHAR" property="aid" />
+    <result column="identity" jdbcType="INTEGER" property="identity" />
+    <result column="anum" jdbcType="INTEGER" property="anum" />
+    <result column="aimage" jdbcType="VARCHAR" property="aimage" />
+    <result column="acollage" jdbcType="VARCHAR" property="acollage" />
+    <result column="apwd" jdbcType="VARCHAR" property="apwd" />
+    <result column="aname" jdbcType="VARCHAR" property="aname" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    aid, identity, anum, aimage, acollage, apwd, aname
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.AdministratorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from administrator
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from administrator
+    where aid = #{aid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from administrator
+    where aid = #{aid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.AdministratorExample">
+    delete from administrator
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Administrator">
+    insert into administrator (aid, identity, anum, 
+      aimage, acollage, apwd, 
+      aname)
+    values (#{aid,jdbcType=CHAR}, #{identity,jdbcType=INTEGER}, #{anum,jdbcType=INTEGER}, 
+      #{aimage,jdbcType=VARCHAR}, #{acollage,jdbcType=VARCHAR}, #{apwd,jdbcType=VARCHAR}, 
+      #{aname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Administrator">
+    insert into administrator
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="identity != null">
+        identity,
+      </if>
+      <if test="anum != null">
+        anum,
+      </if>
+      <if test="aimage != null">
+        aimage,
+      </if>
+      <if test="acollage != null">
+        acollage,
+      </if>
+      <if test="apwd != null">
+        apwd,
+      </if>
+      <if test="aname != null">
+        aname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        #{aid,jdbcType=CHAR},
+      </if>
+      <if test="identity != null">
+        #{identity,jdbcType=INTEGER},
+      </if>
+      <if test="anum != null">
+        #{anum,jdbcType=INTEGER},
+      </if>
+      <if test="aimage != null">
+        #{aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="acollage != null">
+        #{acollage,jdbcType=VARCHAR},
+      </if>
+      <if test="apwd != null">
+        #{apwd,jdbcType=VARCHAR},
+      </if>
+      <if test="aname != null">
+        #{aname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.AdministratorExample" resultType="java.lang.Long">
+    select count(*) from administrator
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update administrator
+    <set>
+      <if test="record.aid != null">
+        aid = #{record.aid,jdbcType=CHAR},
+      </if>
+      <if test="record.identity != null">
+        identity = #{record.identity,jdbcType=INTEGER},
+      </if>
+      <if test="record.anum != null">
+        anum = #{record.anum,jdbcType=INTEGER},
+      </if>
+      <if test="record.aimage != null">
+        aimage = #{record.aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acollage != null">
+        acollage = #{record.acollage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apwd != null">
+        apwd = #{record.apwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aname != null">
+        aname = #{record.aname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update administrator
+    set aid = #{record.aid,jdbcType=CHAR},
+      identity = #{record.identity,jdbcType=INTEGER},
+      anum = #{record.anum,jdbcType=INTEGER},
+      aimage = #{record.aimage,jdbcType=VARCHAR},
+      acollage = #{record.acollage,jdbcType=VARCHAR},
+      apwd = #{record.apwd,jdbcType=VARCHAR},
+      aname = #{record.aname,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.stuManage.bean.Administrator">
+    update administrator
+    <set>
+      <if test="identity != null">
+        identity = #{identity,jdbcType=INTEGER},
+      </if>
+      <if test="anum != null">
+        anum = #{anum,jdbcType=INTEGER},
+      </if>
+      <if test="aimage != null">
+        aimage = #{aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="acollage != null">
+        acollage = #{acollage,jdbcType=VARCHAR},
+      </if>
+      <if test="apwd != null">
+        apwd = #{apwd,jdbcType=VARCHAR},
+      </if>
+      <if test="aname != null">
+        aname = #{aname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.stuManage.bean.Administrator">
+    update administrator
+    set identity = #{identity,jdbcType=INTEGER},
+      anum = #{anum,jdbcType=INTEGER},
+      aimage = #{aimage,jdbcType=VARCHAR},
+      acollage = #{acollage,jdbcType=VARCHAR},
+      apwd = #{apwd,jdbcType=VARCHAR},
+      aname = #{aname,jdbcType=VARCHAR}
+    where aid = #{aid,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.AttendanceMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Attendance">
+    <result column="kid" jdbcType="CHAR" property="kid" />
+    <result column="ktime" jdbcType="TIMESTAMP" property="ktime" />
+    <result column="cid" jdbcType="CHAR" property="cid" />
+    <result column="sid" jdbcType="CHAR" property="sid" />
+    <result column="statue" jdbcType="VARCHAR" property="statue" />
+    <result column="cuid" jdbcType="CHAR" property="cuid" />
+    <result column="tid" jdbcType="CHAR" property="tid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    kid, ktime, cid, sid, statue, cuid, tid
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.AttendanceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from attendance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.AttendanceExample">
+    delete from attendance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Attendance">
+    insert into attendance (kid, ktime, cid, 
+      sid, statue, cuid, tid
+      )
+    values (#{kid,jdbcType=CHAR}, #{ktime,jdbcType=TIMESTAMP}, #{cid,jdbcType=CHAR}, 
+      #{sid,jdbcType=CHAR}, #{statue,jdbcType=VARCHAR}, #{cuid,jdbcType=CHAR}, #{tid,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Attendance">
+    insert into attendance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="kid != null">
+        kid,
+      </if>
+      <if test="ktime != null">
+        ktime,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="statue != null">
+        statue,
+      </if>
+      <if test="cuid != null">
+        cuid,
+      </if>
+      <if test="tid != null">
+        tid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="kid != null">
+        #{kid,jdbcType=CHAR},
+      </if>
+      <if test="ktime != null">
+        #{ktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=CHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=CHAR},
+      </if>
+      <if test="statue != null">
+        #{statue,jdbcType=VARCHAR},
+      </if>
+      <if test="cuid != null">
+        #{cuid,jdbcType=CHAR},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.AttendanceExample" resultType="java.lang.Long">
+    select count(*) from attendance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update attendance
+    <set>
+      <if test="record.kid != null">
+        kid = #{record.kid,jdbcType=CHAR},
+      </if>
+      <if test="record.ktime != null">
+        ktime = #{record.ktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=CHAR},
+      </if>
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=CHAR},
+      </if>
+      <if test="record.statue != null">
+        statue = #{record.statue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cuid != null">
+        cuid = #{record.cuid,jdbcType=CHAR},
+      </if>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update attendance
+    set kid = #{record.kid,jdbcType=CHAR},
+      ktime = #{record.ktime,jdbcType=TIMESTAMP},
+      cid = #{record.cid,jdbcType=CHAR},
+      sid = #{record.sid,jdbcType=CHAR},
+      statue = #{record.statue,jdbcType=VARCHAR},
+      cuid = #{record.cuid,jdbcType=CHAR},
+      tid = #{record.tid,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

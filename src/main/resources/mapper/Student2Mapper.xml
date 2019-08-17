@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.Student2Mapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Student2">
+    <id column="sid" jdbcType="CHAR" property="sid" />
+    <result column="ispoor" jdbcType="INTEGER" property="ispoor" />
+    <result column="party" jdbcType="VARCHAR" property="party" />
+    <result column="fammly" jdbcType="VARCHAR" property="fammly" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="totalnum" jdbcType="REAL" property="totalnum" />
+    <result column="dynum" jdbcType="REAL" property="dynum" />
+    <result column="fammlynum" jdbcType="REAL" property="fammlynum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sid, ispoor, party, fammly, role, totalnum, dynum, fammlynum
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.Student2Example" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student2
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student2
+    where sid = #{sid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student2
+    where sid = #{sid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.Student2Example">
+    delete from student2
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Student2">
+    insert into student2 (sid, ispoor, party, 
+      fammly, role, totalnum, 
+      dynum, fammlynum)
+    values (#{sid,jdbcType=CHAR}, #{ispoor,jdbcType=INTEGER}, #{party,jdbcType=VARCHAR}, 
+      #{fammly,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{totalnum,jdbcType=REAL}, 
+      #{dynum,jdbcType=REAL}, #{fammlynum,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Student2">
+    insert into student2
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="ispoor != null">
+        ispoor,
+      </if>
+      <if test="party != null">
+        party,
+      </if>
+      <if test="fammly != null">
+        fammly,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="totalnum != null">
+        totalnum,
+      </if>
+      <if test="dynum != null">
+        dynum,
+      </if>
+      <if test="fammlynum != null">
+        fammlynum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=CHAR},
+      </if>
+      <if test="ispoor != null">
+        #{ispoor,jdbcType=INTEGER},
+      </if>
+      <if test="party != null">
+        #{party,jdbcType=VARCHAR},
+      </if>
+      <if test="fammly != null">
+        #{fammly,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="totalnum != null">
+        #{totalnum,jdbcType=REAL},
+      </if>
+      <if test="dynum != null">
+        #{dynum,jdbcType=REAL},
+      </if>
+      <if test="fammlynum != null">
+        #{fammlynum,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.Student2Example" resultType="java.lang.Long">
+    select count(*) from student2
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student2
+    <set>
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=CHAR},
+      </if>
+      <if test="record.ispoor != null">
+        ispoor = #{record.ispoor,jdbcType=INTEGER},
+      </if>
+      <if test="record.party != null">
+        party = #{record.party,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fammly != null">
+        fammly = #{record.fammly,jdbcType=VARCHAR},
+      </if>
+      <if test="record.role != null">
+        role = #{record.role,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalnum != null">
+        totalnum = #{record.totalnum,jdbcType=REAL},
+      </if>
+      <if test="record.dynum != null">
+        dynum = #{record.dynum,jdbcType=REAL},
+      </if>
+      <if test="record.fammlynum != null">
+        fammlynum = #{record.fammlynum,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student2
+    set sid = #{record.sid,jdbcType=CHAR},
+      ispoor = #{record.ispoor,jdbcType=INTEGER},
+      party = #{record.party,jdbcType=VARCHAR},
+      fammly = #{record.fammly,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=VARCHAR},
+      totalnum = #{record.totalnum,jdbcType=REAL},
+      dynum = #{record.dynum,jdbcType=REAL},
+      fammlynum = #{record.fammlynum,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.stuManage.bean.Student2">
+    update student2
+    <set>
+      <if test="ispoor != null">
+        ispoor = #{ispoor,jdbcType=INTEGER},
+      </if>
+      <if test="party != null">
+        party = #{party,jdbcType=VARCHAR},
+      </if>
+      <if test="fammly != null">
+        fammly = #{fammly,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="totalnum != null">
+        totalnum = #{totalnum,jdbcType=REAL},
+      </if>
+      <if test="dynum != null">
+        dynum = #{dynum,jdbcType=REAL},
+      </if>
+      <if test="fammlynum != null">
+        fammlynum = #{fammlynum,jdbcType=REAL},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.stuManage.bean.Student2">
+    update student2
+    set ispoor = #{ispoor,jdbcType=INTEGER},
+      party = #{party,jdbcType=VARCHAR},
+      fammly = #{fammly,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      totalnum = #{totalnum,jdbcType=REAL},
+      dynum = #{dynum,jdbcType=REAL},
+      fammlynum = #{fammlynum,jdbcType=REAL}
+    where sid = #{sid,jdbcType=CHAR}
+  </update>
+</mapper>

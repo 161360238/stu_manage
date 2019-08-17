@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.stuManage.bean.Teacher">
+    <id column="tid" jdbcType="CHAR" property="tid" />
+    <result column="tname" jdbcType="VARCHAR" property="tname" />
+    <result column="identity" jdbcType="INTEGER" property="identity" />
+    <result column="tsex" jdbcType="INTEGER" property="tsex" />
+    <result column="timage" jdbcType="VARCHAR" property="timage" />
+    <result column="tphone" jdbcType="VARCHAR" property="tphone" />
+    <result column="tpwd" jdbcType="VARCHAR" property="tpwd" />
+    <result column="tscore" jdbcType="INTEGER" property="tscore" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    tid, tname, identity, tsex, timage, tphone, tpwd, tscore, salt
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.stuManage.bean.TeacherExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where tid = #{tid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from teacher
+    where tid = #{tid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.stuManage.bean.TeacherExample">
+    delete from teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.stuManage.bean.Teacher">
+    insert into teacher (tid, tname, identity, 
+      tsex, timage, tphone, 
+      tpwd, tscore, salt)
+    values (#{tid,jdbcType=CHAR}, #{tname,jdbcType=VARCHAR}, #{identity,jdbcType=INTEGER}, 
+      #{tsex,jdbcType=INTEGER}, #{timage,jdbcType=VARCHAR}, #{tphone,jdbcType=VARCHAR}, 
+      #{tpwd,jdbcType=VARCHAR}, #{tscore,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.stuManage.bean.Teacher">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="tname != null">
+        tname,
+      </if>
+      <if test="identity != null">
+        identity,
+      </if>
+      <if test="tsex != null">
+        tsex,
+      </if>
+      <if test="timage != null">
+        timage,
+      </if>
+      <if test="tphone != null">
+        tphone,
+      </if>
+      <if test="tpwd != null">
+        tpwd,
+      </if>
+      <if test="tscore != null">
+        tscore,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=CHAR},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        #{identity,jdbcType=INTEGER},
+      </if>
+      <if test="tsex != null">
+        #{tsex,jdbcType=INTEGER},
+      </if>
+      <if test="timage != null">
+        #{timage,jdbcType=VARCHAR},
+      </if>
+      <if test="tphone != null">
+        #{tphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tpwd != null">
+        #{tpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="tscore != null">
+        #{tscore,jdbcType=INTEGER},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.stuManage.bean.TeacherExample" resultType="java.lang.Long">
+    select count(*) from teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update teacher
+    <set>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=CHAR},
+      </if>
+      <if test="record.tname != null">
+        tname = #{record.tname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identity != null">
+        identity = #{record.identity,jdbcType=INTEGER},
+      </if>
+      <if test="record.tsex != null">
+        tsex = #{record.tsex,jdbcType=INTEGER},
+      </if>
+      <if test="record.timage != null">
+        timage = #{record.timage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tphone != null">
+        tphone = #{record.tphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tpwd != null">
+        tpwd = #{record.tpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tscore != null">
+        tscore = #{record.tscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.salt != null">
+        salt = #{record.salt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update teacher
+    set tid = #{record.tid,jdbcType=CHAR},
+      tname = #{record.tname,jdbcType=VARCHAR},
+      identity = #{record.identity,jdbcType=INTEGER},
+      tsex = #{record.tsex,jdbcType=INTEGER},
+      timage = #{record.timage,jdbcType=VARCHAR},
+      tphone = #{record.tphone,jdbcType=VARCHAR},
+      tpwd = #{record.tpwd,jdbcType=VARCHAR},
+      tscore = #{record.tscore,jdbcType=INTEGER},
+      salt = #{record.salt,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.stuManage.bean.Teacher">
+    update teacher
+    <set>
+      <if test="tname != null">
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        identity = #{identity,jdbcType=INTEGER},
+      </if>
+      <if test="tsex != null">
+        tsex = #{tsex,jdbcType=INTEGER},
+      </if>
+      <if test="timage != null">
+        timage = #{timage,jdbcType=VARCHAR},
+      </if>
+      <if test="tphone != null">
+        tphone = #{tphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tpwd != null">
+        tpwd = #{tpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="tscore != null">
+        tscore = #{tscore,jdbcType=INTEGER},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.stuManage.bean.Teacher">
+    update teacher
+    set tname = #{tname,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=INTEGER},
+      tsex = #{tsex,jdbcType=INTEGER},
+      timage = #{timage,jdbcType=VARCHAR},
+      tphone = #{tphone,jdbcType=VARCHAR},
+      tpwd = #{tpwd,jdbcType=VARCHAR},
+      tscore = #{tscore,jdbcType=INTEGER},
+      salt = #{salt,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=CHAR}
+  </update>
+</mapper>

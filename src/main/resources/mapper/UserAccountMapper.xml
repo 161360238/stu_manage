@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.UserAccountMapper">
+
+	
+	<select id="selectStuCountAccountByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="Integer">
+		select count(*) from student1 
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				sname like "%"#{stu_name}"%"
+			</if>
+			and sstatue = 0
+		</where>
+	</select>
+	
+	<!-- 以删除学生列表 -->
+	<select id="selectPageStuAccountByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="com.pdsu.stuManage.bean.Student1">
+		select sid,sname,snum,exnum,ssex,cname,sgrade,smajor from student1
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				sname like "%"#{stu_name}"%"
+			</if>
+			and sstatue = 0
+		</where>
+			limit #{startRow},#{size}
+	</select>
+	
+	<!-- 恢复学生账号 -->
+	<update id="updateStuAccountBySid" parameterType="String">
+		update student1 set sstatue = 1 where sid = #{sid}
+	</update>
+	
+	<!-- 教师 -->
+	<select id="selectTeaCountAccountByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="Integer">
+		select count(*) from teacher 
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				tname like "%"#{stu_name}"%"
+			</if>
+			and tscore = 0
+		</where>
+	</select>
+
+	<!-- 已删除教师列表 -->
+	<select id="selectPageTeaAccountByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="com.pdsu.stuManage.bean.Teacher">
+		select tid,tname,tsex,tphone from teacher
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				tname like "%"#{stu_name}"%"
+			</if>
+			and tscore = 0
+		</where>
+			limit #{startRow},#{size}
+	</select>
+	
+	<!-- 恢复教师账号 -->
+	<update id="updateTeaAccountBySid" parameterType="String">
+		update teacher set tscore = 1 where tid = #{tid}
+	</update>
+	
+	<!-- 插入管理员账号 -->
+	<insert id="insertManagerAccount" parameterType="com.pdsu.stuManage.bean.Administrator">
+		insert into administrator(aid,acollage,identity,apwd,aname,aimage) values(#{aid},#{acollage},#{identity},#{apwd},#{aname},#{aimage})	
+	</insert>
+	
+	<!-- 管理员列表 -->
+	<select id="selectCountMancherByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="Integer">
+		select count(*) from administrator 
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				aname like "%"#{stu_name}"%"
+			</if>
+		</where>
+	</select>
+	
+	<!-- 管理员列表 -->
+	<select id="selectPageMancherByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="com.pdsu.stuManage.bean.Administrator">
+		select aid,aname,acollage from administrator
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				aname like "%"#{stu_name}"%"
+			</if>			
+		</where>
+			limit #{startRow},#{size}
+	</select>
+	
+	<delete id="deleteManAccountByAid" parameterType="String">
+		delete from administrator where aid =#{aid}
+	</delete>	
+	
+	<!-- 管理管登陆 -->
+	<select id="selectManagerAccount" parameterType="String" resultType="com.pdsu.stuManage.bean.Administrator">
+		select * from administrator where acollage = #{acollage}
+	</select>
+	
+</mapper>

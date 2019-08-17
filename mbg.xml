@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 配置数据库连接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://111.231.1.101:3306/student-manage" userId="souvc"
+			password="abc123">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 指定javaBean生成的位置 -->
+		<javaModelGenerator targetPackage="com.pdsu.stuManage.bean"
+			targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!--指定sql映射文件生成的位置 -->
+		<sqlMapGenerator targetPackage="mapper" targetProject=".\src\main\resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 指定dao接口生成的位置，mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.pdsu.stuManage.dao" targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+
+		<!-- table指定每个表的生成策略 -->
+		<!-- table指定每个表的生成策略 -->
+		<table tableName="achievement" domainObjectName="Achievement"></table>
+		<table tableName="administrator" domainObjectName="Administrator"></table>
+		<table tableName="attendance" domainObjectName="Attendance"></table>
+		<table tableName="candt" domainObjectName="Candt"></table>
+		<table tableName="clazz" domainObjectName="Clazz"></table>
+		<table tableName="cuandc" domainObjectName="Cuandc"></table>
+		<table tableName="curriculum" domainObjectName="Curriculum"></table>
+		<table tableName="function" domainObjectName="Function"></table>
+		<table tableName="iandf" domainObjectName="Iandf"></table>
+		<table tableName="notice" domainObjectName="Notice"></table>
+		<table tableName="punishment" domainObjectName="Punishment"></table>
+		<table tableName="reward" domainObjectName="Reward"></table>
+		<table tableName="room" domainObjectName="Room"></table>
+		<table tableName="student1" domainObjectName="Student1"></table>
+		<table tableName="student2" domainObjectName="Student2"></table>
+		<table tableName="teacher" domainObjectName="Teacher"></table>
+		<table tableName="attendcode" domainObjectName="Attendcode"></table>
+		
+		
+		<table tableName="zclass" domainObjectName="Zclass"></table>
+		<table tableName="zands" domainObjectName="Zands"></table>
+		<table tableName="xandc" domainObjectName="Xandc"></table>
+		<table tableName="mandc" domainObjectName="Mandc"></table>
+		
+		
+		
+	</context>
+</generatorConfiguration>

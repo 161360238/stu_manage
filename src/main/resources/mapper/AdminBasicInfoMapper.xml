@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.AdminBasicInfoMapper">
+	
+	<!-- 查询总条数 -->
+	<select id="selectStuConunt" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="Integer">
+		select count(*) from student1 
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				sname  like "%"#{stu_name}"%"
+			</if>
+			<if test="enter_year != null and enter_year != ''">
+				and sgrade  = #{enter_year}
+			</if>
+			<if test="stu_major != null and stu_major != ''">
+				and smajor  = #{stu_major}
+			</if>
+			<if test="stu_class != null and stu_class != ''">
+				and cname  = #{stu_class}
+			</if>
+			and sstatue > 0
+		</where>			
+	</select>
+		
+	<!-- 查询学生基本信息 -->
+  		<resultMap type="com.pdsu.stuManage.bean.Student1" id="studentMapper">
+  			<id column="sid" property="sid"/>
+  			<result column="sname" property="sname"/>  			
+  			<result column="snum" property="snum"/>  			
+  			<result column="exnum" property="exnum"/>  			
+  			<result column="colname" property="colname"/>  			
+  			<result column="cname" property="cname"/>  			
+  			<result column="rid" property="rid"/>  			
+  			<result column="sphone" property="sphone"/>  			
+  			<result column="sgrade" property="sgrade"/>  			
+  			<result column="ssex" property="ssex"/>  			
+  			<result column="smajor" property="smajor"/>  			
+  			<result column="sstatue" property="sstatue"/>  						
+  			<association property="student2"
+  				select="selectZhifuBySid" column="sid" javaType="com.pdsu.stuManage.bean.Student2">
+	  				<id column="sid" property="sid"/>
+	  				<result column="role" property="role"/>	  				
+  			</association>			
+  		</resultMap>
+  		<select id="selectStuPageByFindStu" resultMap="studentMapper" parameterType="com.pdsu.stuManage.utils.FindStu" >
+  		select sid,sname,cname,snum,exnum,colname,cid,rid,sphone,sgrade,ssex,smajor,sstatue from student1 		
+  		<where>
+			<if test="stu_name != null and stu_name != ''">
+				sname like "%"#{stu_name}"%"
+			</if>
+			<if test="enter_year != null and enter_year != ''">
+				and sgrade  = #{enter_year}
+			</if>
+			<if test="stu_major != null and stu_major != ''">
+				and smajor  = #{stu_major}
+			</if>
+			<if test="stu_class != null and stu_class != ''">
+				and cname  = #{stu_class}
+			</if>
+			and sstatue > 0
+		</where>	
+			limit #{startRow},#{size}
+  		</select>
+  		<select id="selectZhifuBySid" resultType="com.pdsu.stuManage.bean.Student2">
+  			select sid,role from student2 where sid = #{sid}
+  		</select>
+  		
+  	<!-- 插入学生的奖励信息 -->
+  	<insert id="addStuRewardInfo" parameterType="com.pdsu.stuManage.bean.Reward">
+  		insert into reward(rid,sid,rdesc,rtime,rscore,rother) values(#{rid},#{sid},#{rdesc},#{rtime},#{rscore},#{rother})
+  	</insert>
+  		
+  	<!--插入学生的处分情况 -->
+  	<insert id="addStuPunishInfo" parameterType="com.pdsu.stuManage.bean.Punishment">
+  		insert into punishment(pid,sid,pdesc,ptime,pscore,pother) values(#{pid},#{sid},#{pdesc},#{ptime},#{pscore},#{pother})
+  	</insert>
+  		
+  	<!-- 插入学生的入党班委等信息 -->	
+  	<insert id="addStudent2Info" parameterType="com.pdsu.stuManage.bean.Student2">
+  		insert into student2(sid,party,fammly,role,dynum) values(#{sid},#{party},#{fammly},#{role},#{dynum})
+  	</insert>
+  	
+  	<!-- 查询入党班委是否已经存在-->
+  	<select id="selesctStudent2InfoExist" parameterType="String" resultType="int">
+  		select count(*) from student2 where sid = #{sid}
+  	</select>
+  		
+  	<!-- 更新入党班委等信息 -->
+  	<update id="updateStudent2Info" parameterType="com.pdsu.stuManage.bean.Student2">
+  		update student2 set party=#{party},fammly=#{fammly},role=#{role},dynum=#{dynum} where sid=#{sid}
+  	</update>
+	
+	<!-- 回显入党班委等信息 -->
+	<select id="selectStu2BySid" parameterType="String" resultType="com.pdsu.stuManage.bean.Student2">
+		select party,fammly,role,dynum from student2 where sid = #{sid}
+	</select>
+	
+	<!-- 查询奖励信息 -->
+	<select id="selectStuRewardInfoBySid" parameterType="String" resultType="com.pdsu.stuManage.bean.Reward">
+		select rdesc,rtime,rscore,rother from reward where sid=#{sid}
+	</select>
+		
+	<!-- 查询处分信息 -->
+	<select id="selectStupunishmentInfoBySid" parameterType="String" resultType="com.pdsu.stuManage.bean.Punishment">
+		select pdesc,ptime,pscore,pother from punishment where sid=#{sid}
+	</select>
+	
+	<!-- 删除学生账号 -->
+	<update id="delectStuByManagerBySid" parameterType="String">
+		update student1 set sstatue = 0 where sid = #{sid}
+	</update>
+	
+	<!-- 同步到student1班委 -->
+	<update id="updateStudent1Role" parameterType="com.pdsu.stuManage.bean.Student2">
+		update student1 set role = #{role} where sid = #{sid}	
+	</update>
+	
+	<select id="selectCountTeacherByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="Integer">
+		select count(*) from teacher 
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				tname like "%"#{stu_name}"%"
+			</if>
+			and tscore > 0
+		</where>
+	</select>
+	
+	<!-- 教师列表 -->
+	<select id="selectPageTeacherByFindStu" parameterType="com.pdsu.stuManage.utils.FindStu" resultType="com.pdsu.stuManage.bean.Teacher">
+		select tid,tname,tsex,tphone from teacher
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				tname like "%"#{stu_name}"%"
+			</if>
+			and tscore > 0
+		</where>
+			limit #{startRow},#{size}
+	</select>
+		
+	<!-- 删除教师 -->
+	<update id="delectTeaByManagerBySid" parameterType="String">
+		update teacher set tscore = 0 where tid = #{tid}
+	</update>
+		
+</mapper>

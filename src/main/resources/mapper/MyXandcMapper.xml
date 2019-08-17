@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.MyXandcMapper">
+  
+<!-- selectRecordByCid 通过行政班级的id 查询自建班级的记录 -->
+		<select id="selectRecordByCid" parameterType="java.lang.String" resultType="com.pdsu.stuManage.bean.Xandc">
+			select * from xandc where cid=#{cid} and restatue=1
+		</select>
+</mapper>

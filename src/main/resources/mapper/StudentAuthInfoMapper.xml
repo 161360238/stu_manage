@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.stuManage.dao.StudentAuthInfoMapper">
+	
+	<!-- 学生完善信息 -->
+	<insert id="updateAuthenStuInfo" parameterType="com.pdsu.stuManage.bean.Student1">
+		update student1 set sname=#{sname},simage=#{simage},snum=#{snum},colname=#{colname},cname=#{cname},sphone=#{sphone},
+		sgrade=#{sgrade},ssex=#{ssex},smajor=#{smajor},rid=#{rid},sstatue=#{sstatue},cid=#{cid}
+		where snum=#{snum} or exnum = #{exnum}	
+	</insert>
+	
+	<!-- 教师完善信息 -->
+	<insert id="updateAuthenTeaInfo" parameterType="com.pdsu.stuManage.bean.Teacher">
+		update teacher set tname=#{tname},tsex=#{tsex},timage=#{timage},tscore=#{tscore}
+		where tphone = #{tphone}
+	</insert>
+	
+	<!-- 查询年级 --> 		
+  		<select id="selectCgradeByPid"  parameterType="int" resultType="com.pdsu.stuManage.bean.Mandc">
+  			select reid,cgrade from mandc where pid = #{id}
+  		</select>
+		
+	<!-- 查询专业 -->
+	<select id="selectCmajorByPid" parameterType="int" resultType="com.pdsu.stuManage.bean.Mandc">
+		select reid,cmajor from mandc where pid = #{id}
+	</select>
+		
+	<!-- 查询班级 -->
+	<select id="selectCnameByPid" parameterType="int" resultType="com.pdsu.stuManage.bean.Mandc">
+		select reid,cname from mandc where pid = #{id}
+	</select>
+	
+	
+	<select id="selectCidByReid" parameterType="String" resultType="String">
+		select cid from mandc where reid=#{reid}
+	</select>
+	
+	<select id="selectRoomNameByReid" parameterType="int" resultType="com.pdsu.stuManage.bean.Room">
+		select rnum from room where cid in (select cid from mandc where reid = #{xxx})
+	</select>
+	
+	
+	
+		
+</mapper>
