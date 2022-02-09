@@ -25,7 +25,7 @@
 		<javax.servlet-api-version>3.0.1</javax.servlet-api-version>
 		<junit-version>4.12</junit-version>
 		<shiro-core-version>1.2.3</shiro-core-version>
-		<shiro-web-version>1.2.3</shiro-web-version>
+		<shiro-web-version>1.7.1</shiro-web-version>
 		<shiro-spring-version>1.2.3</shiro-spring-version>
 		<shiro-ehcache-version>1.2.3</shiro-ehcache-version>
 		<shiro-quartz-version>1.2.3</shiro-quartz-version>
